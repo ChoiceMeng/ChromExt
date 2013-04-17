@@ -15,24 +15,28 @@ function CloseLeft() {
 		  tab = {};
 			for(var i=0; i < tabs.length; i++)
 			{
-				//alert("6");
-				if(tabs[i].pinned)
-					continue;
-				
 				if(tabs[i].selected)
-					if(tabs.length == 0)
-						return;
-					else
-						break;
+                    break;
 					
 				tab[tabs[i].id] = tabs[i];
 			}
 			
 			//alert(tab);
+			var idx = 0;
 			for(var t in tab)
 			{			
+                if(idx == 0)
+                {
+                   if(tab[t].pinned && tab[t].selected)
+                        return;
+                }
+                
+                if(tab[t].pinned)
+                    continue;
 				//alert("8");
+				
 				chrome.tabs.remove(tab[t].id, function(){});
+				idx++;
 				//alert("9");
 			}
 		})
